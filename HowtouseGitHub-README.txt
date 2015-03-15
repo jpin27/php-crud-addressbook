@@ -12,3 +12,7 @@ How to use GitHub
 5. Then commit. Because I added you as a collaborator, you can commit changes to the repository without asking for my permission.
 
 [ Additional info ] 6. If I don't have you as collaborator, you need a "pull request".
+
+
+
+===Hi aicxe, it's clubbermonkey. I'm testing to see if I can do this. Blah blah.
