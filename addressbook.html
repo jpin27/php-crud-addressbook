@@ -1,0 +1,150 @@
+<!-- Assignment 2B 
+ - addressbook.html is the View in the MVC pattern for the CRUD address book
+ - website designed for this assignment.
+ -
+ - As a View, it is only concerned with the bare-bones appearance of the website.
+ - To sanitize the code on the front-end, all styling such as background colours and
+ - text effects are done in a separate CSS file, and all AJAX animations and client-side
+ - updates are handled in the JavaScript Controller.
+ -
+ - Jude Pineda jmp846 11094980 
+-->
+ 
+ 
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset  =  "utf-8">
+	<title>Address Book</title>
+	
+	<!-- Import CSS file to prettify the page -->
+	<link rel = "stylesheet" type = "text/css" href = "addressbook.css"> 
+	
+	<!-- Import JavaScript files for pop-up functionality -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type = "text/javascript" src = "addressbook.js"></script>
+	
+	<!-- Mobile device optimization 
+		I'm not sure if this is even feasible - I don't think our TAs will
+		actually test it on mobile.
+	-->
+	<meta name = ”HandheldFriendly” content = ”true” />
+	<meta name = ”MobileOptimized” content = ”320” />
+	<meta name = ”viewport” content = ”width = device-width, initial-scale = 1.0” />
+</head>
+<body>
+
+<div id = "Layer1"> 
+	<h1>Address Book</h1> 
+	
+	
+	<a href = "#add-contact" id = "add-contact-btn">Add Contact</a>
+	
+	<div id = "addContactForm"> 	
+		<fieldset id = "basicinfo">
+			<legend>Basic Information</legend>
+			<table id = "add-contact-form">				
+				<tr>
+					<td>Name<br />
+					<table>
+						<tr>
+							<td><input type = "text" name = "fname" id = "fname"  /></td>
+							<td><input type = "text" name = "lname" id = "lname"  /></td>
+						</tr><tr>
+							<td><div id = "smalltext">First Name</div></td>
+							<td><div id = "smalltext">Last Name</div></td>
+						</tr>
+					</table>
+					</td>
+				</tr><tr>
+					<td>Company<br />
+					<input type = "text" name = "company" id = "company" size = "46" /></td>
+				</tr><tr>
+					<td>Phone Number<br />
+					<input type = "text" name = "phone" id = "phone"  /></td> 
+				</tr>
+				</fieldset>
+			
+			</table>
+		</fieldset>
+		
+		<br />
+		<fieldset id = "extrainfo">
+			<legend>Other information</legend>
+			<table id = "add-contact-form">	
+			<tr>
+				<td>Email Address</td><td>
+				<input type = "email" name = "email" id = "email"  size = "34"/></td>
+			</tr><tr>
+				<td>URL</td><td>	
+				<input type = "url" name = "url" id = "url"  size = "34"/></td> 
+			</tr><tr>
+				<td>Address</td><td>
+				<textarea name = "address" id = "address" rows = "7" cols = "36"  /></textarea></td>
+			</table>
+		</fieldset>
+		
+		<br />
+		<fieldset id = "moreinfo">
+			<legend>Additional details</legend>
+			<table id = "add-contact-form">	
+				</tr><tr>
+					<td>Birthday</td><td><input type = "date" name = "bday" id = "bday"  /></td> 
+				</tr>
+				<!-- Note: I omitted the Date part as specified in the assignment PDF
+					because I have no idea what it does - does it specify the date when
+					the contact was added to the address book? Such a feature is not 
+					essential.
+				-->
+				<tr>
+					<td>Notes</td>
+					<td align = "right"><textarea name = "notes" id = "notes" rows = "7" cols = "43"  /></textarea></td>
+				</tr>
+			</table>
+		</fieldset>
+		
+		<table>
+			<tr><td>&nbsp;</td></tr><tr>
+				<td>
+					<a href = "#save-contact" id = "save-contact-btn">Save Changes</a> 
+					<a href = "#cancel" id = "cancel-btn">Cancel</a> 
+				</td> 
+			</tr>
+		</table>
+		
+	</div> 
+	
+	
+	
+	
+	
+	<div id = "updateContactForm"> 	
+		
+		<!-- TODO: Update Contact Form.
+			Search by First name and last name, then IDK. Maybe let the user rewrite all info?
+		-->
+		
+	</div> 
+	
+	
+	
+	
+	
+	<br />
+	<div id = "notice"> 
+		notice box 
+	</div> 
+
+	<div id = "list-title">Contact List</div> 
+	<ul id = "contacts-lists"> 
+		<li>mambe nanje [+23777545907] - <a 
+            href = "#delete-id" class = "deletebtn" contactid = '1'> delete contact </a></li> 
+        <li>mambe nanje [+23777545907] - <a 
+            href = "#delete-id" class = "deletebtn" contactid = '2'> delete contact</a></li> 
+        <li>mambe nanje [+23777545907] - <a
+            href = "#delete-id" class = "deletebtn" contactid = '3'> delete contact</a></li> 
+	</ul> 
+</div>
+
+</body>
+</html>
