@@ -35,6 +35,8 @@ function refreshAddressBook(items){
 
 	// Empty the contact list 
 	var list = $('#contacts-lists'); 
+	
+	
 
 	// Save a client copy of the items array for validation.
 	// This happens everytime this function is called. 
@@ -73,10 +75,10 @@ function setSaveButtonListener(){
 		var bday = $('#bday').val(); 
 		var notes = $('#notes').val();
 		
-
+		
 		//Error checking goes here.
 		//TODO: More validation checks.
-		
+		/*
 		if(fname == "" || lname == "" || phone == ""){ 
 			$('#notice').empty().html('The name or number fields cannot be null').show('slow'); 
 		} else if(isDuplicate(fname, lname)){ 
@@ -86,41 +88,41 @@ function setSaveButtonListener(){
 		} else if(name.match(/d/)){ 
 			$('#notice').empty().html('the name field must not contain numeric input').show('slow'); 
 		} else{ 
-
+*/
 		// call the AJAX save function.
 		// TODO: This is what I'm stuck at right now. 
 		// Note: this does not work either,I keep getting a parser error - unexpected /. 
 		// I have no idea where the stray slash comes from.
 		// Idea: Maybe use GET instead of POST?
+		
+			// Display the Saving... prompt
+			// millisecond delay?
 			$('#notice').empty().html('Saving....').show(); 
+			
 			$.ajax({ 
-				url: 'addressbook.php', 		
-				data: 'action=add&fname=' + fname + '&lname=' + lname+ '&company=' + company + '&email=' + email + '&url=' + url + '&phone=' + phone + '&address=' + address + '&bday=' + bday + '&notes=' + notes, 
-				dataType: 'json', 
-				type: 'post', 
-				success: function (j) {   
-					
-					// Display the Saving... prompt
-					$('#notice').empty().html(j.msg);
-					
-					// Empty the fields
-					$('#fname').val(''); 
-					$('#lname').val(''); 
-					$('#company').val(''); 
-					$('#email').val(''); 
-					$('#url').val(''); 
-					$('#phone').val(''); 
-					$('#address').val(''); 
-					$('#bday').val(''); 
-					$('#notes').val('');
-					// Reload the contact list to display new contact info 
-					refreshAddressBook(j.contacts); 
-				},
-				error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				url: 'addressbook.php', 
+				type: 'post',
+				data: 'action=add&' + $('#add-contact-form').serialize() 
+			}).done(function(yay){   
+				
+				// Empty the fields
+				$('#fname').val(''); 
+				$('#lname').val(''); 
+				$('#company').val(''); 
+				$('#email').val(''); 
+				$('#url').val(''); 
+				$('#phone').val(''); 
+				$('#address').val(''); 
+				$('#bday').val(''); 
+				$('#notes').val('');
+				// Reload the contact list to display new contact info 
+				refreshAddressBook(yay.contacts); 
+				$('#notice').empty().html('Saved to database').show();
+			}).fail(function(XMLHttpRequest, textStatus, errorThrown) { 
 					alert("Error adding. Status: " + textStatus); alert("Error: " + errorThrown); 
-				}
-			}); 
-		}	
+			});
+			 
+		//}	
 	}); 
 } 
 

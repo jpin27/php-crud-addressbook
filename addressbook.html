@@ -41,6 +41,7 @@
 	<a href = "#add-contact" id = "add-contact-btn">Add Contact</a>
 	
 	<div id = "addContactForm"> 	
+		<form id = "add-contact-form" action = "addressbook.php" method = "post">
 		<fieldset id = "basicinfo">
 			<legend>Basic Information</legend>
 			<table id = "add-contact-form">				
@@ -110,7 +111,7 @@
 				</td> 
 			</tr>
 		</table>
-		
+		</form>
 	</div> 
 	
 	
@@ -136,11 +137,11 @@
 
 	<div id = "list-title">Contact List</div> 
 	<ul id = "contacts-lists"> 
-		<li>mambe nanje [+23777545907] - <a 
+		<li>John Smith [3067874547] - <a 
             href = "#delete-id" class = "deletebtn" contactid = '1'> delete contact </a></li> 
-        <li>mambe nanje [+23777545907] - <a 
+        <li>Jane Doe [+639875874587] - <a 
             href = "#delete-id" class = "deletebtn" contactid = '2'> delete contact</a></li> 
-        <li>mambe nanje [+23777545907] - <a
+        <li>Steve Brown [+13067154545] - <a
             href = "#delete-id" class = "deletebtn" contactid = '3'> delete contact</a></li> 
 	</ul> 
 </div>

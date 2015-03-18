@@ -6,9 +6,9 @@
 	<body>
 		<?php
 		$servername="lovett.usask.ca";
-		$username="cmpt350_mtn610";
-		$password="xqywvz0m81";
-		$dbname="cmpt350_mtn610";
+		$username="cmpt350_jmp846";
+		$password="zak3hocoax";
+		$dbname="cmpt350_jmp846";
 		
 		$conn = new mysqli($servername, $username, $password, $dbname);
 		

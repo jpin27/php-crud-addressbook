@@ -7,7 +7,6 @@
  *
  * Jude Pineda jmp846 11094980 */
 
-
 /*
 
 Note: The following SQL code has been executed in the database whose credentials are
@@ -29,6 +28,9 @@ CREATE TABLE contacts (
 
 */
 
+
+<?php 
+
 //configure the database paramaters 
 $hostname = "lovett.usask.ca"; 
 $dbname = "cmpt350_jmp846"; 
@@ -36,40 +38,77 @@ $uname = "cmpt350_jmp846";
 $pword = "zak3hocoax"; 
 
 // Connect to, and select the database
-$addressbook = mysql_pconnect($hostname, $uname, $pword) or trigger_error(mysql_error(),E_USER_ERROR); 
-mysql_select_db($dbname); 
+$conn = new mysqli($hostname, $uname, $pword, $dbname);
+if($conn -> connect_error)
+	die("connection failed: ".$conn->connect_error);
+else echo "Connected successfully";
+
+
+
+
+// THIS SHIT WORKS!!!!
+
 
 // saveContact() adds a new contact to the database 
 function saveContact($fName, $lName, $company, $pNumber, $email, $url, $address, $bday, $notes){ 
-	$sql = "INSERT INTO contacts (firstName, lastName, company, phoneNumber, email, url, address, birthday, notes) VALUES ('" . $fName . "','" . $lName . "','" . $company . "','" . $pNumber . "','" . $email . "','" . $url .
-	"','" . $address . "','" . $bday . "','" . $notes . "');"; 
-	$result = mysql_query($sql) or die(mysql_error()); 
+	
+	echo "I'm here! " . $fName . "', '" 
+		. $lName . "', '" 
+		. $company . "', '" 
+		. $pNumber . "', '" 
+		. $email . "', '" 
+		. $url . "', '" 
+		. $address . "', '" 
+		. $bday . "', '" 
+		. $notes . "')"; 
+	
+	$sql = "INSERT INTO contacts (firstName, lastName, company, 
+		phoneNumber, email, url, address, birthday, notes) VALUES ('" 
+		. $fName . "', '" 
+		. $lName . "', '" 
+		. $company . "', '" 
+		. $pNumber . "', '" 
+		. $email . "', '" 
+		. $url . "', '" 
+		. $address . "', '" 
+		. $bday . "', '" 
+		. $notes . "')"; 
+		
+	if($GLOBALS["conn"] -> query($sql) == TRUE)
+		echo "New contact added successfully: " . $sql . "<br/>
+		with id:" . $GLOBALS["conn"] -> insert_id;
+	else
+		echo "Error with query: " . $sql . "<br/>" . $GLOBALS["conn"] -> error;
+	
+	//$result = mysqli_query($sql) or die(mysql_error()); 
 } 
 
 // the function below deletes a contact given an id.
 function deleteContact($id){ 
 	$sql = "DELETE FROM contacts where id = " . $id; 
-	$result = mysql_query($sql); 
+	$result = mysqli_query($sql); 
 } 
   
 // accessor function to get all the contacts. returns an object array.
-function getContacts(){ 
+function refreshAddressBook(){ 
 	
 	// execute SQL command to get all contents of the table
 	$sql = "SELECT * FROM contacts"; 
-	$result = mysql_query($sql); 
+	$result = $GLOBALS["conn"] -> query($sql); 
 	
 	// place them in an array of objects
 	$contacts = array(); 
-	while($record = mysql_fetch_object($result)){ 
+	while($record = mysqli_fetch_object($result)){ 
 		array_push($contacts,$record); 
-	} 
+	}
 	
 	return $contacts; 
 } 
 
 // Get whatever command AJAX throws at us 
-$action = $_POST['action']; 
+$action = isset($_POST['action']) ? $_POST['action'] : ''; 
+
+echo "ACTION IS " . $action;
 
 // It's either add or delete. 
 if($action == "add"){
@@ -90,7 +129,7 @@ if($action == "add"){
 	$output['msg'] = "Contact " . $fName . " " . $lName . " has been saved successfully";
 	
 	// refresh the contact list
-	$output['contacts'] = getContacts();
+	$output['contacts'] = refreshAddressBook();
 	echo json_encode($output); 
 } else if($action == "delete"){
 	
@@ -102,10 +141,10 @@ if($action == "add"){
 	$output['msg'] = "The entry has been deleted."; 
 
 	// refresh the contact list
-	$output['contacts'] = getContacts(); 
+	$output['contacts'] = refreshAddressBook(); 
 	echo json_encode($output); 
 } else { 
-	$output['contacts'] = getContacts(); 
+	$output['contacts'] = refreshAddressBook(); 
 	$output['msg'] = "Contact list refreshed"; 
 	echo json_encode($output); 
 } 
