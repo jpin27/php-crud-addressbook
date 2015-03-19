@@ -9,8 +9,8 @@
  * webpage. This avoids unnecessary multiple pages that would only otherwise display 
  * a nugget of data. 
  *
- * Jude Pineda jmp846 11094980 */
- 
+ * Jude Pineda jmp846 11094980 
+ * Mark Nguyen mtn610 */
  
 // Let's make a local version of the contact list, pulled from the database.
 localContactList = ""; 
@@ -115,9 +115,11 @@ function setSaveButtonListener(){
 				$('#address').val(''); 
 				$('#bday').val(''); 
 				$('#notes').val('');
+				
 				// Reload the contact list to display new contact info 
-				refreshAddressBook(yay.contacts); 
+				//refreshAddressBook(yay.contacts); 
 				$('#notice').empty().html('Saved to database').show();
+				
 			}).fail(function(XMLHttpRequest, textStatus, errorThrown) { 
 					alert("Error adding. Status: " + textStatus); alert("Error: " + errorThrown); 
 			});
@@ -201,6 +203,27 @@ $(document).ready(function(){
 	setDeleteButtonListener(); 
 	setSaveButtonListener(); 
 	
+	
+	
+	$.ajax({ 
+		url: 'addressbook.php', 
+		type: 'post',
+		data: '', 
+	}).done(function(yay){   
+		
+		alert("YO WHAT UP BIOTCH: " + yay.contacts);
+		refreshAddressBook(yay.contacts); 
+		
+	}).fail(function(XMLHttpRequest, textStatus, errorThrown) { 
+			alert("CANT REFRESH NOG: " + textStatus); alert("Error: " + errorThrown); 
+	});
+	
+	
+	
+	
+	
+	
+	/*
 	// Finally, load the contact list.
 	$.ajax({ 
 		url: 'addressbook.php', 
@@ -209,7 +232,10 @@ $(document).ready(function(){
 		type: 'post', 
 		success: function (j) { 
 			//refresh the address list 
+			alert("YO WHAT UP BIOTCH: " + j.contacts);
 			refreshAddressBook(j.contacts); 
-		},
-	}); 
+		},error: function(XMLHttpRequest, textStatus, errorThrown) { 
+			alert("NIGNOG DIDNT LOAD: " + textStatus); alert("NOGNOG: " + errorThrown); 
+		}
+	}); */
 }); 

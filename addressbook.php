@@ -5,7 +5,8 @@
  * It only handles the operations on the MySQL back-end and does not in any way
  * interface with the JavaScript controller or the HTML View.
  *
- * Jude Pineda jmp846 11094980 */
+ * Jude Pineda jmp846 11094980 
+ * Mark Nguyen mtn610 */
 
 /*
 
@@ -41,26 +42,12 @@ $pword = "zak3hocoax";
 $conn = new mysqli($hostname, $uname, $pword, $dbname);
 if($conn -> connect_error)
 	die("connection failed: ".$conn->connect_error);
-else echo "Connected successfully";
+else echo "Connected successfully <br />";
 
 
-
-
-// THIS SHIT WORKS!!!!
-
-
+// THIS SHIT WORKS!!!! DONT TOUCH
 // saveContact() adds a new contact to the database 
 function saveContact($fName, $lName, $company, $pNumber, $email, $url, $address, $bday, $notes){ 
-	
-	echo "I'm here! " . $fName . "', '" 
-		. $lName . "', '" 
-		. $company . "', '" 
-		. $pNumber . "', '" 
-		. $email . "', '" 
-		. $url . "', '" 
-		. $address . "', '" 
-		. $bday . "', '" 
-		. $notes . "')"; 
 	
 	$sql = "INSERT INTO contacts (firstName, lastName, company, 
 		phoneNumber, email, url, address, birthday, notes) VALUES ('" 
@@ -75,19 +62,16 @@ function saveContact($fName, $lName, $company, $pNumber, $email, $url, $address,
 		. $notes . "')"; 
 		
 	if($GLOBALS["conn"] -> query($sql) == TRUE)
-		echo "New contact added successfully: " . $sql . "<br/>
+		echo "<br />New contact added successfully: " . $sql . "<br />
 		with id:" . $GLOBALS["conn"] -> insert_id;
-	else
-		echo "Error with query: " . $sql . "<br/>" . $GLOBALS["conn"] -> error;
-	
-	//$result = mysqli_query($sql) or die(mysql_error()); 
+	else echo "Error with query: " . $sql . "<br/>" . $GLOBALS["conn"] -> error;
 } 
 
 // the function below deletes a contact given an id.
 function deleteContact($id){ 
 	$sql = "DELETE FROM contacts where id = " . $id; 
 	$result = mysqli_query($sql); 
-} 
+}
   
 // accessor function to get all the contacts. returns an object array.
 function refreshAddressBook(){ 
@@ -96,19 +80,19 @@ function refreshAddressBook(){
 	$sql = "SELECT * FROM contacts"; 
 	$result = $GLOBALS["conn"] -> query($sql); 
 	
+
 	// place them in an array of objects
 	$contacts = array(); 
-	while($record = mysqli_fetch_object($result)){ 
-		array_push($contacts,$record); 
+	while($record = $result -> fetch_object()){ 
+		array_push($contacts, $record); 
 	}
-	
-	return $contacts; 
+	return $contacts;
 } 
 
 // Get whatever command AJAX throws at us 
 $action = isset($_POST['action']) ? $_POST['action'] : ''; 
 
-echo "ACTION IS " . $action;
+echo "ACTION IS " . $action . "<br />";
 
 // It's either add or delete. 
 if($action == "add"){
@@ -130,6 +114,7 @@ if($action == "add"){
 	
 	// refresh the contact list
 	$output['contacts'] = refreshAddressBook();
+	echo "OUTPUT IS " . $output;
 	echo json_encode($output); 
 } else if($action == "delete"){
 	
